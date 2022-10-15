@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-    {{encore_entry_link_tags('enregistreImage')}}
     {{encore_entry_link_tags('modal-box')}}
     {{encore_entry_link_tags('loader')}}
 {% endblock %}
@@ -15,14 +14,8 @@
     <span class="loader" ></span>
 {% endblock box_title %}
 {% block box_body %}
-    <div id="show_image_modal" class="action_modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span id="closespan_image" class="close">&times;</span>
-            <div class="image"></div>
-        </div>
-    </div>
-    {{ include('_form_mail_template.html.twig') }}
+    {{ include('_partials/image_modal.html.twig') }}
+    {{ include('_partials/_form_mail_template.html.twig') }}
     
 {% endblock %}
 {% endembed %}
@@ -30,5 +23,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{encore_entry_script_tags('enregistreImage')}}
+    {{encore_entry_script_tags('EnregistreImageService')}}
 {% endblock %}

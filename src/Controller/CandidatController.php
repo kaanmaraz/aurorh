@@ -179,8 +179,6 @@ class CandidatController extends AbstractController
             }
 
 
-
-
             $imageForm = $this->createForm(AddImageMailTemplateType::class);
             $imageForm->handleRequest($request);
             if ($imageForm->isSubmitted() && $imageForm->isValid()) {
@@ -197,7 +195,7 @@ class CandidatController extends AbstractController
             }
             $imagesUrl = $mailTemplateService->getAllImagesUrl(); 
 
-            return $this->render('_form_mail_template.html.twig', [
+            return $this->render('_partials/_form_mail_template.html.twig', [
                 'mailForm' => $mailform->createView(), 
                 'imageForm' => $imageForm->createView(), 
                 'imagesUrl' => $imagesUrl

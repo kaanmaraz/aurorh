@@ -3,8 +3,8 @@
 {% block stylesheets %}
 {{ parent() }}
     {{ encore_entry_link_tags('tableau') }}
-    {{ encore_entry_link_tags('modal-box') }}
     {{ encore_entry_link_tags('loader') }}
+    {{ encore_entry_link_tags('modal-box') }}
     {{ encore_entry_link_tags('enregistreImage') }}
 {% endblock %}
 
@@ -23,15 +23,10 @@
 {% block box_body %}
     <div id="supprimer-selection" ></div>
 
-    <div id="action_modal_mail" class="action_modal">
-        <span class="loader modal-loader" ></span>
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span id="action_closespan_mail" class="close">&times;</span>
-           {# {{ include('_form_mail_template.html.twig') }} #}
-            
-        </div>
-    </div>
+   {{ include('_partials/action_mail_modal.html.twig') }}
+   {{ include('_partials/image_modal.html.twig') }}
+
+
     <table id="table" class="table table-striped table-bordered table-hover table-responsive-md">
         <thead>
             <tr id="tout">
@@ -98,6 +93,5 @@
         var typeDonnee = "candidat"
     </script>
     {{ encore_entry_script_tags('tableau') }}
-    {{ encore_entry_script_tags('modal-box') }}
-    {# {{encore_entry_script_tags('enregistreImage')}} #}
+    {{ encore_entry_script_tags('MailFormModalService') }}
 {% endblock %}

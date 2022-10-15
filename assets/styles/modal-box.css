@@ -23,7 +23,7 @@
   }
   
   /* The Close Button */
-  .close {
+  .close-mail-modal, .close-image {
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -32,8 +32,10 @@
     opacity: 1;
   }
   
-  .close:hover,
-  .close:focus {
+  .close-mail-modal:hover,
+  .close-mail-modal:focus, 
+  .close-image:hover,
+  .close-image:focus {
     color: black;
     background-color: white;
     text-decoration: none;
