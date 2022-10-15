@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeDocument{% endblock %}
+
+{% block body %}
+    <h1>TypeDocument</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_document.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ type_document.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Obligatoire</th>
+                <td>{{ type_document.obligatoire ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Multiple</th>
+                <td>{{ type_document.multiple ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Format</th>
+                <td>{{ type_document.format }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_document_index') }}">back to list</a>
+
+    <a href="{{ path('app_type_document_edit', {'id': type_document.id}) }}">edit</a>
+
+    {{ include('type_document/_delete_form.html.twig') }}
+{% endblock %}

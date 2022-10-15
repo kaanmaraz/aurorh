@@ -1,0 +1,30 @@
+{
+    "devDependencies": {
+        "@editorjs/image": "^2.6.2",
+        "@hotwired/stimulus": "^3.0.0",
+        "@symfony/stimulus-bridge": "^3.2.0",
+        "@symfony/webpack-encore": "^3.1.0",
+        "core-js": "^3.23.0",
+        "regenerator-runtime": "^0.13.9",
+        "sass": "^1.54.9",
+        "sass-loader": "^13.0.0",
+        "webpack-notifier": "^1.15.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@editorjs/editorjs": "^2.25.0",
+        "admin-lte": "^3.2.0",
+        "axios": "^0.27.2",
+        "bootstrap": "^3.4.1",
+        "jszip": "^3.10.1",
+        "select2": "^4.1.0-rc.0",
+        "toastr": "^2.1.4"
+    }
+}

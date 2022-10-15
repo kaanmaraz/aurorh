@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+    {{ encore_entry_link_tags('form-buttons-footer') }}
+    {{ encore_entry_link_tags('candidatForm') }}
+{% endblock %}
+{% block page_title %}Nouveau Candidat{% endblock %}
+{% block page_subtitle %}{% endblock %}
+{# {% block title %}New Fournisseur{% endblock %} #}
+{% block page_content %}
+    
+
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+{% block box_body %}
+
+    {{ include('candidat/_form.html.twig') }}
+{% endblock %}
+{% endembed %}
+{% endblock %}  
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('candidatForm') }}
+{% endblock %}

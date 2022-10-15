@@ -1,0 +1,33 @@
+<div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                {{form_start(imageForm)}}
+                {{form_row(imageForm.image)}}
+                {{form_row(imageForm.ajouter, { 'label': '<i class="fas fa-plus"></i> Ajouter', 'label_html' : true })}}
+                {{form_end(imageForm)}}
+            </div>
+            <div class="col-md-8">
+                <label >Liste des images enregistrées pour les mails:</label>
+                <ul class="list-group" id="listeUrls">
+                    {% for imageUrl in imagesUrl %}
+                        <li class="list-group-item"><a href="{{imageUrl}}">{{imageUrl}}</a> <button id="{{imageUrl}}" class="apercu btn btn-xs btn-info" >Aperçu</button> <button id="{{imageUrl}}" class="supprime btn btn-xs btn-danger"> <i class="fas fa-times"></i> </button> </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12">
+            
+            <label >Liste des variables utilisables dans le contenu du mail:</label>
+                 
+            <ul class="liste-variables">
+                {% set LISTE_VARIABLE = constant("App\\Service\\MailTemplateService::LISTE_VARIABLES")  %}
+                    {% for variable in LISTE_VARIABLE %}
+                        <li class="list-group-item"> {{variable}} </li>
+                    {% endfor %}
+            </ul>
+            {{form_start(mailForm)}}
+            {{form_row(mailForm.contenu)}}
+            {{form_row(mailForm.valider, { 'label': '<i class="fas fa-check"></i> Valider', 'label_html' : true })}}
+            {{form_end(mailForm)}}
+        </div>
+    </div>

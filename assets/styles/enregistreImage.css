@@ -1,0 +1,13 @@
+#listeUrls .supprime{
+    float: right;
+}
+
+.image{
+    display: flex;
+    justify-content: center;
+}
+
+.liste-variables{
+    display: flex;
+    justify-content: center;
+}

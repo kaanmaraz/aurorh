@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+{{ encore_entry_link_tags('select2') }}
+    {{ encore_entry_link_tags('form-buttons-footer') }}
+{% endblock %}
+{% block page_title %}Nouveau Type de document{% endblock %}
+{% block page_subtitle %}{% endblock %}
+{% block page_content %}
+    
+
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+{% block box_body %}
+
+    {{ include('type_document/_form.html.twig') }}
+{% endblock %}
+{% endembed %}
+{% endblock %} 
+{% block javascripts %}
+{{ parent() }}
+    {{ encore_entry_script_tags('select2') }}
+{% endblock %}

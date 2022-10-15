@@ -1,0 +1,54 @@
+# This file is the entry point to configure your own services
+# Files in the packages/ subdirectory configure your dependencies
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    fichiersBack: '%kernel.project_dir%/..%env(FICHIERS_BACK)%'
+    fichiersChemin: '%kernel.project_dir%%env(FICHIERS_CHEMIN)%'
+    fichierExcel: '%kernel.project_dir%/..%env(FICHIER_EXCEL)%'
+    mailTemplatesChemin: '%kernel.project_dir%%env(MAIL_TEMPLATES_CHEMIN)%'
+    reglementInterieurChemin: '%kernel.project_dir%/..%env(REGINTERCHEMIN)%'
+    noticeChemin: '%kernel.project_dir%/..%env(NOTICECHEMIN)%'
+    noticeFormChemin: '%kernel.project_dir%/..%env(NOTICEFORMCHEMIN)%'
+    urlAPIOVH: '%env(URL_API_OVH)%'
+    urlPROXY: '%env(URL_PROXY)%'
+    mailAPI: '%env(USERNAME_API)%'
+    motdepasseAPI: '%env(PASSWORD_API)%'
+    apiAdditionnalPassword: '%env(API_ADDITIONAL_PASSWORD)%'
+    logMailChemin: '%kernel.project_dir%%env(JOURNAL_MAIL_CHEMIN)%'
+    logErrMailChemin: '%kernel.project_dir%/..%env(LOGERRMAIL_CHEMIN)%'
+    logErrWSChemin: '%kernel.project_dir%/..%env(LOGERRWS_CHEMIN)%'
+    logErrChemin: '%kernel.project_dir%/..%env(LOGERR_CHEMIN)%'
+    listeServicesChemin: '%kernel.project_dir%%env(LISTE_SERVICES)%'
+    urlGDMAP: '%env(URL_GDMAP)%'
+    jetonGDMAP: '%env(JETON_GDMAP)%'
+    dateExpJeton: '%env(DATE_EXPIRATION_JETON)%'
+    siret: '%env(SIRET)%'
+    urlFormulaire: '%env(URL_FORMULAIRE)%'
+    imagesMailTemplateChemin: '%kernel.project_dir%/public/images_mail_template'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Service\MailTemplateService: 
+        arguments:
+            $urlFormulaire: '%urlFormulaire%'
+            $imagesMailTemplateChemin: '%imagesMailTemplateChemin%'

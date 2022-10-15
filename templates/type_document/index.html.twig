@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+    {{ encore_entry_link_tags('tableau') }}
+{% endblock %}
+{% block page_title %}Liste des Types de documents{% endblock %}
+{% block page_subtitle %}{% endblock %}
+{% block page_content %}
+    
+
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+{% block box_before %}
+    <a type="button" class="btn btn-success" href="{{ path('app_type_document_new') }}"><i class="fas fa-plus"></i> Ajouter un type de document</a>
+    {% endblock %}
+{% block box_body %}
+<div id="supprimer-selection" ></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Obligatoire</th>
+                <th>Multiple</th>
+                <th>Format</th>
+                <th>actions</th>
+                <th><input type="checkbox" name="tout" id="tout"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_document in type_documents %}
+            <tr id="{{type_document.id}}">
+                <td>{{ type_document.id }}</td>
+                <td>{{ type_document.libelle }}</td>
+                <td>{{ type_document.obligatoire ? 'Oui' : 'Non' }}</td>
+                <td>{{ type_document.multiple ? 'Oui' : 'Non' }}</td>
+                <td>{{ type_document.format }}</td>
+                <td>
+                    <nav>
+                        <ul class="menu">
+                            <li> <button class="btn btn-default" ><i class="fas fa-ellipsis-h"></i></button>
+                                <ul class="sub-menu"> 
+                                    <li><a type="button" class="bouton-tableau btn btn-warning" href="{{ path('app_type_document_edit', {'id': type_document.id}) }}"><i class="fas fa-edit"></i> Editer</a></li>
+                                    <li>{{ include('type_document/_delete_form.html.twig') }}</li>
+                                </ul>
+                        </ul>
+                    </nav>
+                </td>
+                <td><input type="checkbox" name="checkbox_{{type_document.id}}" id="checkbox_{{type_document.id}}"></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun type de document enregistré</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
+
+{% endembed %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var typeDonnee = "type/document"
+    </script>
+    {{ encore_entry_script_tags('tableau') }}
+{% endblock %}

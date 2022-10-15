@@ -1,0 +1,73 @@
+{% extends '@AdminLTE/layout/security-layout.html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block body %}
+
+
+{% block after_body_start %}{% endblock %}
+{% block login_box %}
+    <div class="login-box">
+        <div class="login-logo">
+        {% block logo_login %}{% endblock %}
+        </div>
+        <div class="login-box-body">
+            <div class="login-box-msg">
+                <h3 class="login-head">
+                    {% block login_box_icon %}{% endblock %}
+                    {% block login_box_msg %}{% endblock %}
+                </h3>
+                {% block login_box_error %}
+                    {% if error|default(false) %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                {% endblock %}
+            </div>
+            {% block login_form %}
+                <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+                <h1 class="h3 mb-3 font-weight-normal">Veuillez vous authentifier</h1>
+                <label for="inputUsername">Nom d'utilisateur</label>
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                <input type="hidden" name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                >
+
+                <button style="margin-top:20px" class="btn btn-lg btn-primary" type="submit">
+                    Se connecter
+                </button>
+            </form>
+            {% endblock %}
+            {% block login_social_auth %}
+    
+            {% endblock %}
+            {# {% block login_actions %}
+                {% if 'adminlte_password_reset'|route_alias != 'adminlte_password_reset' %}
+                    <a href="{{ path('adminlte_password_reset'|route_alias) }}">
+                        {{ 'I forgot my password'|trans({}, 'AdminLTEBundle') }}
+                    </a>
+                    <br>
+                {% endif %}
+                {% if 'adminlte_registration'|route_alias != 'adminlte_registration' %}
+                    <a href="{{ path('adminlte_registration'|route_alias) }}" class="text-center">
+                        {{ 'Register a new account'|trans({}, 'AdminLTEBundle') }}
+                    </a>
+                {% endif %}
+            {% endblock %} #}
+        </div>
+    </div>
+{% endblock %}
+
+{% endblock %}

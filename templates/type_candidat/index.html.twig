@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+    {{ encore_entry_link_tags('tableau') }}
+{% endblock %}
+{% block page_title %}Liste des Types de contrat{% endblock %}
+{% block page_subtitle %}{% endblock %}
+{% block page_content %}
+    
+
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+{% block box_before %}
+    <a type="button" class="btn btn-success" href="{{ path('app_type_candidat_new') }}"><i class="fas fa-plus"></i> Ajouter un type de contrat</a>
+    {% endblock %}
+{% block box_body %}
+<div id="supprimer-selection" ></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Documents à fournir</th>
+                <th>actions</th>
+                <th><input type="checkbox" name="tout" id="tout"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_candidat in type_candidats %}
+            <tr id="{{type_candidat.id}}">
+                <td>{{ type_candidat.id }}</td>
+                <td>{{ type_candidat.libelle }}</td>
+                <td>{{ type_candidat.documentsAFournir|join(',') }}</td>
+                <td>
+                    <nav>
+                        <ul class="menu">
+                            <li> <button class="btn btn-default" ><i class="fas fa-ellipsis-h"></i></button>
+                                <ul class="sub-menu"> 
+                                    <li><a type="button" class="bouton-tableau btn btn-warning" href="{{ path('app_type_candidat_edit', {'id': type_candidat.id}) }}"><i class="fas fa-edit"></i> Editer</a></li>
+                                    <li>{{ include('type_candidat/_delete_form.html.twig') }}</li>
+                                </ul>
+                        </ul>
+                    </nav>
+                </td>
+                <td><input type="checkbox" name="checkbox_{{type_candidat.id}}" id="checkbox_{{type_candidat.id}}"></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun type de contrat enregistré</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
+
+{% endembed %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var typeDonnee = "type/candidat"
+    </script>
+    {{ encore_entry_script_tags('tableau') }}
+{% endblock %}

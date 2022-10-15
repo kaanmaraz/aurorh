@@ -1,0 +1,57 @@
+framework:
+    workflows: 
+        candidat:
+            type: 'workflow'
+            audit_trail: 
+                enabled: true
+            marking_store: 
+                type: 'method'
+                property: 'statut'
+            supports:
+                - App\Entity\Candidat
+            initial_marking: cree
+            places: 
+                - cree
+                - attente_envoi_mail_form
+                - form_mail_envoye
+                - attente_soumission_mail_form
+                - form_soumis
+                - attente_controle_form
+                - form_controle
+                - form_valid
+                - form_invalid
+                - complet
+
+            transitions: 
+                to_attente_envoi_mail_form:
+                    from: cree
+                    to: attente_envoi_mail_form
+                to_form_mail_envoye:
+                    from: attente_envoi_mail_form
+                    to: form_mail_envoye
+                to_attente_soumission_mail_form:
+                    from: form_mail_envoye
+                    to: attente_soumission_mail_form
+                to_form_soumis:
+                    from: attente_soumission_mail_form
+                    to: form_soumis
+                to_attente_controle_form:
+                    from: form_soumis
+                    to: attente_controle_form
+                to_form_controle:
+                    from: attente_controle_form
+                    to: form_controle
+                to_form_valid:
+                    from: form_controle
+                    to: form_valid
+                to_form_invalid:
+                    from: form_controle
+                    to: form_invalid
+                from_form_invalid:
+                    from: form_invalid
+                    to: [form_controle, attente_envoi_mail_form]
+                to_complet:
+                    from: form_valid
+                    to: complet
+
+                

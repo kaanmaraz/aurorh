@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+    {{ encore_entry_link_tags('form-buttons-footer') }}
+{% endblock %}
+{% block page_title %}{{ candidat.prenom }} {{ candidat.nom }}  {% endblock %}
+{% block page_subtitle %}{% endblock %}
+{# {% block title %}New Fournisseur{% endblock %} #}
+{% block page_content %}
+    
+
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+{% block box_body %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ candidat.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom - Nom d'usage - Prenom</th>
+                <td>{{ candidat.nom }}</td>
+                <td>{{ candidat.prenom }}</td>
+                <td>{{ candidat.nomUsage }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ candidat.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ candidat.email }}</td>
+            </tr>
+            <tr>
+                <th>Adresse et Complément</th>
+                <td>{{ candidat.adresse }}</td>
+                <td>{{ candidat.completementAdresse }}</td>
+            </tr>
+            <tr>
+                <th>Code postal - Ville</th>
+                <td>{{ candidat.codePostal }}</td>
+                <td>{{ candidat.ville }}</td>
+            </tr>
+            <tr>
+                <th>Date et ville de naissance</th>
+                <td>{{ candidat.dateDeNaissance ? candidat.dateDeNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ candidat.villeNaissance }}</td>
+            </tr>
+            <tr>
+                <th>Département Pays de naissance</th>
+                <td>{{ candidat.departementNaissance }}</td>
+                <td>{{ candidat.paysNaissance }}</td>
+            </tr>
+            <tr>
+                <th>Nationnalite</th>
+                <td>{{ candidat.nationnalite }}</td>
+            </tr>
+            <tr>
+                <th>Numéro de sécurité sociale et clé</th>
+                <td>{{ candidat.numeroSs }}</td>
+                <td>{{ candidat.cle }}</td>
+            </tr>
+            {% if candidat.dateExpirationTs %}
+                <tr>
+                    <th>Date d'expiration du titre de séjour si existant</th>
+                    <td>{{ candidat.dateExpirationTs ? candidat.dateExpirationTs|date('Y-m-d') : '' }}</td>
+                </tr>
+            {% endif %}
+
+            <tr>
+                <th>Date prévisionnelle d'embauche et délai du formulaire</th>
+                <td>{{ candidat.datePrevisEmbauche ? candidat.datePrevisEmbauche|date('Y-m-d') : '' }}</td>
+                <td>{{ candidat.delaiFormulaire ? candidat.delaiFormulaire|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Poste / Service / Site</th>
+                <td>{{ candidat.poste }}</td>
+                <td>{{ candidat.site }}</td>
+                <td>{{ candidat.service }}</td>
+            </tr>
+            <tr>
+                <th>DebutCDD et Fin de contrat</th>
+                <td>{{ candidat.debutCDD ? candidat.debutCDD|date('Y-m-d') : '' }}</td>
+                <td>{{ candidat.finCDD ? candidat.finCDD|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Prime</th>
+                <td>{{ candidat.prime }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="form-buttons-footer">
+        <div class="form-group"><a class="btn retour-liste" href="{{ path('app_candidat_index') }}"><i class="fas fa-sign-out-alt"></i> Retour à la liste</a></div>
+        <div class="form-group"><a  class="btn btn-warning" href="{{ path('app_candidat_edit', {id: candidat.id}) }}"> <i class="fas fa-edit"></i> Editer </a></div>
+        <div class="form-group">{% include "candidat/_delete_form.html.twig" %}</div>
+    </div>
+{% endblock %}
+{% endembed %}
+{% endblock %}  
+

@@ -1,0 +1,17 @@
+.form-buttons-footer{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+    width: 50%;
+    margin-top:100px ;
+}
+
+.retour-liste{
+    border: 1px solid lightgrey;
+    background-color: white;
+}
+.retour-liste:hover{
+    border: 1px solid lightgrey;
+    background-color: lightgray;
+}

@@ -1,0 +1,21 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-3">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_row(form.obligatoire) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_row(form.multiple) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_row(form.format) }}
+        </div>
+    </div>
+    <div class="form-buttons-footer">
+         <div class="form-group"><a class="btn retour-liste" href="{{ path('app_type_document_index') }}"><i class="fas fa-sign-out-alt"></i> Retour à la liste</a></div>
+        {{ form_row(form.valider, { 'label': '<i class="fas fa-check"></i> Valider', 'label_html' : true }) }}
+        {{ form_row(form.validerEtSuivant, { 'label': '<i class="fas fa-check"></i> Valider et passer au suivant', 'label_html' : true }) }}
+    </div>
+    {{ form_end(form) }}

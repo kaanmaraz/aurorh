@@ -1,0 +1,51 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.nom) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.prenom) }}
+        </div>
+        <div class="col-md-10">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_row(form.typeCandidat) }}
+        </div>
+        <div class="col-md-12 row">
+            <div class="col-md-6">
+                {{ form_row(form.poste) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.service) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.site) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.datePrevisEmbauche) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.delaiFormulaire) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.debutCDD) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.finCDD) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.periodeEssai) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.prime) }}
+        </div>
+    </div>
+
+    <div class="form-buttons-footer">
+         <div class="form-group"><a class="btn retour-liste" href="{{ path('app_candidat_index') }}"><i class="fas fa-sign-out-alt"></i> Retour à la liste</a></div>
+        {{ form_row(form.valider, { 'label': '<i class="fas fa-check"></i> Valider', 'label_html' : true }) }}
+        {{ form_row(form.validerEtSuivant, { 'label': '<i class="fas fa-check"></i> Valider et passer au suivant', 'label_html' : true }) }}
+    </div>
+{{ form_end(form) }}

@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+    {{ encore_entry_link_tags('tableau') }}
+    {{ encore_entry_link_tags('modal-box') }}
+    {{ encore_entry_link_tags('loader') }}
+    {{ encore_entry_link_tags('enregistreImage') }}
+{% endblock %}
+
+{% block page_title %}Liste des Candidats{% endblock %}
+{% block page_subtitle %}{% endblock %}
+{% block page_content %}
+    
+
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+{% block box_before %}
+    <a type="button" class="btn btn-success" href="{{ path('app_candidat_new') }}"><i class="fas fa-plus"></i> Ajouter un candidat</a>
+{% endblock %}
+{% block box_title %}
+    <span class="loader" ></span>
+{% endblock %}
+{% block box_body %}
+    <div id="supprimer-selection" ></div>
+
+    <div id="action_modal_mail" class="action_modal">
+        <span class="loader modal-loader" ></span>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="action_closespan_mail" class="close">&times;</span>
+           {# {{ include('_form_mail_template.html.twig') }} #}
+            
+        </div>
+    </div>
+    <table id="table" class="table table-striped table-bordered table-hover table-responsive-md">
+        <thead>
+            <tr id="tout">
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Poste</th>
+                <th>Contrat</th>
+                <th>Statut</th>
+                <th>Expiration formulaire / Date Embauche</th>
+                <th>Actions</th>
+                <th><input type="checkbox" name="tout" id="tout"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set STATUTS = constant("App\\Entity\\Candidat::STATUTS") %}
+        {% for candidat in candidats %}
+            <tr id="{{candidat.id}}" >
+                
+                <td>{{ candidat.nom }}  {{ candidat.prenom }}</td>
+                <td>{{ candidat.email }}</td>
+                <td>{{ candidat.poste }}</td>
+                <td>{{ candidat.typeCandidat.libelle}}</td>
+                <td>{{ STATUTS[candidat.statut|keys[0]]["LIBELLE"] }}</td>
+                <td>{{ candidat.delaiFormulaire ? candidat.delaiFormulaire|date('d-m-Y') : '' }} / {{ candidat.datePrevisEmbauche ? candidat.datePrevisEmbauche|date('d-m-Y') : '' }}</td>
+                <td>
+                    <nav>
+                        <ul class="menu">
+                            <li> <button class="btn btn-default" ><i class="fas fa-ellipsis-h"></i></button>
+                                <ul class="sub-menu"> 
+                                    {% if STATUTS[candidat.statut|keys[0]]["ACTION"] != "aucune" %}
+                                        <button 
+                                            class="btn btn-primary action_button"
+                                            id="envoi_mail_bouton_{{candidat.id}}">
+                                            {{ STATUTS[candidat.statut|keys[0]]["ACTION"] }}
+                                        </button>
+                                    {% endif %}
+                                    <li><a type="button" class="bouton-tableau btn btn-info" href="{{ path('app_candidat_show', {'id': candidat.id}) }}"><i class="fas fa-search"></i> Voir</a></li>
+                                    <li><a type="button" class="bouton-tableau btn btn-warning" href="{{ path('app_candidat_edit', {'id': candidat.id}) }}"><i class="fas fa-edit"></i> Editer</a></li>
+                                    <li>{{ include('candidat/_delete_form.html.twig') }}</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </td>
+                <td><input type="checkbox" name="checkbox_{{candidat.id}}" id="checkbox_{{candidat.id}}"></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">Aucun candidat enregistré</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+    {% endblock %}
+
+{% endembed %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var typeDonnee = "candidat"
+    </script>
+    {{ encore_entry_script_tags('tableau') }}
+    {{ encore_entry_script_tags('modal-box') }}
+    {# {{encore_entry_script_tags('enregistreImage')}} #}
+{% endblock %}
