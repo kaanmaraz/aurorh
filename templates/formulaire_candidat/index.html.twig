@@ -1,0 +1,15 @@
+{% extends "formulaire_candidat/base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('formulaireLien') }}
+{% endblock %}
+
+{% block body %}
+    {% form_theme form 'bootstrap_5_layout.html.twig' %}
+    {{ include('formulaire_candidat/_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('formulaireLien') }}
+{% endblock %}

@@ -1,0 +1,32 @@
+.list-group{
+    --bs-list-group-bg: white!important;
+    --bs-list-group-color: black!important;
+}
+.list-group-item{
+    font-size: 1.5em;
+    background-color: white;
+    color: black; 
+}
+
+.list-group-item:hover{
+    font-size: 1.5em;
+    background-color: var(--bs-gray-dark);
+    color: white; 
+
+}
+.list-group-item .badge{
+    font-size: 1em;
+}
+
+.list-group-item:first-child{
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+}
+.list-group-item:last-child{
+    border-bottom-left-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+}
+
+.modal-footer{
+    margin-top: 5%;
+}

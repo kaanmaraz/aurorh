@@ -5,7 +5,7 @@
     {{ encore_entry_link_tags('tableau') }}
     {{ encore_entry_link_tags('loader') }}
     {{ encore_entry_link_tags('modal-box') }}
-    {{ encore_entry_link_tags('enregistreImage') }}
+    {{ encore_entry_link_tags('enregistreFichiersStyle') }}
 {% endblock %}
 
 {% block page_title %}Liste des Candidats{% endblock %}
@@ -93,5 +93,6 @@
         var typeDonnee = "candidat"
     </script>
     {{ encore_entry_script_tags('tableau') }}
-    {{ encore_entry_script_tags('MailFormModalService') }}
+    {{encore_entry_script_tags('glyphiconAlterne')}}
+    {{encore_entry_script_tags('mailFormModal')}}
 {% endblock %}

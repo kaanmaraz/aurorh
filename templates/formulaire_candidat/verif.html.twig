@@ -1,0 +1,121 @@
+{% extends "formulaire_candidat/base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('verificationFormulaire') }}
+    {{ encore_entry_link_tags('modal-box') }}
+{% endblock %}
+{% block body %}
+<div id="apercu_document" class="action_modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            
+        </div>
+    </div>
+
+<div class="row">
+    <legend>Informations du candidat</legend>
+
+    <div class="col-md-6">
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Nom
+                <span class="badge bg-primary rounded-pill"> {{candidat.nom}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Nom d'usage
+                <span class="badge bg-primary rounded-pill"> {{candidat.nomUsage}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Nom Prenom
+                <span class="badge bg-primary rounded-pill"> {{candidat.prenom}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Sexe
+                <span class="badge bg-primary rounded-pill"> {{candidat.sexe}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Adresse
+                <span class="badge bg-primary rounded-pill"> {{candidat.adresse}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Complément d'adresse
+                <span class="badge bg-primary rounded-pill"> {{candidat.complementAdresse}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Code postal
+                <span class="badge bg-primary rounded-pill"> {{candidat.codePostal}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Ville
+                <span class="badge bg-primary rounded-pill"> {{candidat.ville}} </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-6">
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Numero de sécurité sociale
+                <span class="badge bg-primary rounded-pill"> {{candidat.numeroSs}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                cle
+                <span class="badge bg-primary rounded-pill"> {{candidat.cle}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Date de naissance
+                <span class="badge bg-primary rounded-pill"> {{candidat.dateDeNaissance ? candidat.dateDeNaissance|date('d-m-Y') : ''}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Ville de naissance
+                <span class="badge bg-primary rounded-pill"> {{candidat.villeNaissance}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Département de naissance
+                <span class="badge bg-primary rounded-pill"> {{candidat.departementNaissance}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Pays de naissance
+                <span class="badge bg-primary rounded-pill"> {{candidat.paysNaissance}} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Nationnalite
+                <span class="badge bg-primary rounded-pill"> {{candidat.nationnalite}} </span>
+            </li>
+            {% if candidat.dateExpirationTs %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Date d'expiration du titre de séjour
+                    <span class="badge bg-primary rounded-pill"> {{candidat.dateExpirationTs ? candidat.dateExpirationTs|date("d-m-Y")}}</span>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+
+    <div class="col-md-8" style="margin-top: 3%;">
+        <legend>Documents fournis</legend>
+        <ul class="list-group">
+           {% for document in candidat.documents  %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{document.type[0].libelle}} => {{document.nom}}
+                    <a id="{{document.id}}" type="button" class="btn btn-lg btn-primary apercu-fichier">
+                        Voir
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li>
+           {% endfor %}
+
+        </ul>
+    </div>
+
+    <div class="modal-footer">
+        <a type="button" class="btn btn-lg btn-info"><i class="bi bi-ui-checks"></i> Revenir au formulaire</a>
+        <a type="button" class="btn btn-lg btn-success"><i class="bi bi-check-square"></i> Confirmer les informations</a>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('verificationFormulaire') }}
+{% endblock %}

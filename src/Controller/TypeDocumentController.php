@@ -59,7 +59,7 @@ class TypeDocumentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $typeDocumentRepository->add($typeDocument, true);
+            $typeDocumentRepository->add($typeDocument,true);  
 
             if ($form->get("valider")->isClicked()) {
                 return $this->redirectToRoute('app_type_document_index', [], Response::HTTP_SEE_OTHER);

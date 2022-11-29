@@ -20,7 +20,7 @@ class TypeDocumentType extends AbstractType
             ->add('format', ChoiceType::class, [
                 'choices' => [
                     'pdf' => 'pdf',
-                    'jpeg' => 'jpeg',
+                    'image' => 'image',
                 ],
                 "attr" => ["class" => "select2"]
             ])

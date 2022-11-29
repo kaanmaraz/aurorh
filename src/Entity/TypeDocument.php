@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TypeDocumentRepository::class)]
+#[ORM\HasLifecycleCallbacks] 
 class TypeDocument
 {
     #[ORM\Id]
@@ -39,6 +41,9 @@ class TypeDocument
 
     #[ORM\ManyToMany(targetEntity: Document::class, mappedBy: 'type')]
     private Collection $documents;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -153,5 +158,22 @@ class TypeDocument
     public function __toString()
     {
         return $this->libelle . " (" . $this->format . ")"; 
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setSlug(): self
+    {
+        $slugger = new AsciiSlugger(); 
+        $libelle = $slugger->slug($this->libelle, '_'); 
+        $libelle = strtolower($libelle); 
+        $this->slug = $libelle;
+
+        return $this;
     }
 }

@@ -2,7 +2,7 @@
     width: 100%;
 }
 
-.loader {
+.loader, .modal-loader {
     width: 48px;
     height: 48px;
     display: none;
@@ -13,10 +13,19 @@
     border-radius: 50%;
     box-sizing: border-box;
     animation: 1s rotate linear infinite;
-    float: right;
     z-index: 100;
  }
- .loader:before , .loader:after{
+
+.loader{
+  float: right;
+}
+
+.modal-loader{
+  float: left;
+
+}
+
+ .loader:before, .modal-loader:before , .loader:after, .modal-loader:after{
     content: '';
     top: 0;
     left: 0;
@@ -25,10 +34,12 @@
     border-bottom-color:#3c8dbc;
     transform: translate(-10px, 19px) rotate(-35deg);
   }
- .loader:after {
+ .loader:after, .modal-loader:after {
     border-color: black #0000 #0000 #0000 ;
     transform: translate(32px, 3px) rotate(-35deg);
   }
    @keyframes rotate {
     100%{    transform: rotate(360deg)}
   }
+
+  

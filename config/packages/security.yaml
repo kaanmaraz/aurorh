@@ -19,6 +19,11 @@ security:
             custom_authenticator: App\Security\AppAuthenticator
             logout:
                 path: app_logout
+            login_link: 
+                check_route: login_check
+                signature_properties: ['id']
+                success_handler: App\Security\LoginLinkAuthenticationSuccessHandler
+                # lifetime: 3000000
                 # where to redirect after logout
                 # target: app_any_route
             # activate different ways to authenticate
@@ -34,6 +39,7 @@ security:
         - { path: ^/candidat, roles: ROLE_ADMIN }
         - { path: ^/type, roles: ROLE_ADMIN }
         - { path: ^/administration, roles: ROLE_ADMIN}
+        - { path: ^/formulaire, roles: [ROLE_CANDIDAT ,ROLE_ADMIN]}
 
 
 when@test:

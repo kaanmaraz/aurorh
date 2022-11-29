@@ -1,33 +1,87 @@
 <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-4">
-                {{form_start(imageForm)}}
-                {{form_row(imageForm.image)}}
-                {{form_row(imageForm.ajouter, { 'label': '<i class="fas fa-plus"></i> Ajouter', 'label_html' : true })}}
-                {{form_end(imageForm)}}
+
+<div class="panel-group col-md-12" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-info">
+            <div class="panel-heading" role="tab" id="pj">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-pj" aria-expanded="true" aria-controls="collapse-pj">
+                    <i class="fas fa-file"></i> Gérer les les pièces jointes du mail <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+            </h4>
             </div>
-            <div class="col-md-8">
-                <label >Liste des images enregistrées pour les mails:</label>
-                <ul class="list-group" id="listeUrls">
-                    {% for imageUrl in imagesUrl %}
-                        <li class="list-group-item"><a href="{{imageUrl}}">{{imageUrl}}</a> <button id="{{imageUrl}}" class="apercu btn btn-xs btn-info" >Aperçu</button> <button id="{{imageUrl}}" class="supprime btn btn-xs btn-danger"> <i class="fas fa-times"></i> </button> </li>
-                    {% endfor %}
-                </ul>
+            <div id="collapse-pj" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pj">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        {{form_start(pjForm)}}
+                        {{form_row(pjForm.pj)}}
+                        {{form_row(pjForm.ajouter, { 'label': '<i class="fas fa-plus"></i> Ajouter', 'label_html' : true })}}
+                        {{form_end(pjForm)}}
+                    </div>
+                    <div class="col-md-8">
+                        <label >Liste des pjs enregistrées pour les mails:</label>
+                        <ul class="list-group listeUrls-pj" >
+                            {% for pieceJointe in mailTemplate.pieceJointes %}
+                                <li class="list-group-item"><a href="{{pieceJointe.url}}">{{pieceJointe.nom}}</a>  <div>Inclure: <input class="inclu-pj" type="checkbox" name="inclu-pj" id="inclu_{{pieceJointe.id}}" checked={{pieceJointe.actif}} ></div>  <button id="{{pieceJointe.id}}" class="supprime-pj btn btn-xs btn-danger"> <i class="fas fa-times"></i> </button> </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-12">
-            
-            <label >Liste des variables utilisables dans le contenu du mail:</label>
-                 
-            <ul class="liste-variables">
-                {% set LISTE_VARIABLE = constant("App\\Service\\MailTemplateService::LISTE_VARIABLES")  %}
-                    {% for variable in LISTE_VARIABLE %}
-                        <li class="list-group-item"> {{variable}} </li>
-                    {% endfor %}
-            </ul>
-            {{form_start(mailForm)}}
-            {{form_row(mailForm.contenu)}}
-            {{form_row(mailForm.valider, { 'label': '<i class="fas fa-check"></i> Valider', 'label_html' : true })}}
-            {{form_end(mailForm)}}
+            </div>
         </div>
     </div>
+    <div class="panel-group col-md-12" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-info">
+            <div class="panel-heading" role="tab" id="images">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-images" aria-expanded="true" aria-controls="collapse-images">
+                    <i class="fas fa-image"></i> Gérer les images dans le contenu du mail <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+            </h4>
+            </div>
+            <div id="collapse-images" class="panel-collapse collapse" role="tabpanel" aria-labelledby="images">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        {{form_start(imageForm)}}
+                        {{form_row(imageForm.image)}}
+                        {{form_row(imageForm.ajouter, { 'label': '<i class="fas fa-plus"></i> Ajouter', 'label_html' : true })}}
+                        {{form_end(imageForm)}}
+                    </div>
+                    <div class="col-md-8">
+                        <label >Liste des images enregistrées pour les mails:</label>
+                        <ul class="list-group listeUrls-image" >
+                            {% for imageUrl in imagesUrl %}
+                                <li class="list-group-item"><a href="{{imageUrl}}">{{imageUrl}}</a> <button id="{{imageUrl}}" class="apercu-image btn btn-xs btn-info" >Aperçu</button> <button id="{{imageUrl}}" class="supprime-image btn btn-xs btn-danger"> <i class="fas fa-times"></i> </button> </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="col-md-12">
+        
+        <label >Liste des variables utilisables dans le contenu du mail:</label>
+        <nav>
+            <ul class="list-group liste-variables">
+                {% set LISTE_VARIABLE = constant("App\\Service\\MailTemplateService::LISTE_VARIABLES")  %}
+                {% for variable in LISTE_VARIABLE %}
+                    <li class="list-group-item"> {{variable}} </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        {{form_start(mailForm)}}
+        {{form_row(mailForm.sujet)}}
+        {{form_row(mailForm.contenu)}}
+        {{form_row(mailForm.valider, { 'label': '<i class="fas fa-check"></i> Valider', 'label_html' : true })}}
+        {{form_end(mailForm)}}
+    </div>
+
+
+
+</div>

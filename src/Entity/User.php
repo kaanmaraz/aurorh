@@ -12,6 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+    public const NB_CHAR_MDP = 12;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -135,5 +137,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    
+    public function getMdpGenere(): ?string
+    {
+        //////Création d'un mot de passe généré avec des caractères aléatoires//////
+        // Liste des caractères possibles
+        $cars = 'azertyiopqsdfghjklmwxcvbn0123456789';
+        //la chaine de caractère qui sera remplie
+        $mdp = '';
+        $long = strlen($cars);
+
+        srand((float) microtime() * 1000000);
+        //Initialise le générateur de nombres aléatoires
+        //Créer la chaine de caractère avec 12 caractères
+        for ($i = 0; $i < $this::NB_CHAR_MDP; ++$i) {
+            $mdp = $mdp.substr($cars, rand(0, $long - 1), 1);
+        }
+        return $mdp;
     }
 }

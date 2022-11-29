@@ -3,6 +3,7 @@
 {{ parent() }}
     {{ encore_entry_link_tags('form-buttons-footer') }}
     {{ encore_entry_link_tags('candidatForm') }}
+    {{ encore_entry_link_tags('select2') }}
 {% endblock %}
 {% block page_title %} {{candidat.prenom}}  {{candidat.nom}} {% endblock %}
 {% block page_subtitle %}{% endblock %}
@@ -12,7 +13,7 @@
 
 {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
 {% block box_body %}
-
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
     {{ include('candidat/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 {% endblock %}
 {% endembed %}
@@ -21,4 +22,5 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('candidatForm') }}
+    {{ encore_entry_script_tags('select2') }}
 {% endblock %}

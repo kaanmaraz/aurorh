@@ -1,0 +1,112 @@
+            {{form_start(form)}}
+                <fieldset>
+                    <legend>{{candidat.prenom}} {{candidat.nom}} </legend>
+                    
+                    <fieldset class="form-group">
+                        <legend class="mt-4">Informations</legend>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                {{form_row(form.nom)}}
+                            </div>
+                            <div class="col-md-4">
+                                {{form_row(form.nomUsage)}}
+                            </div>
+                            <div class="col-md-4">
+                                {{form_row(form.prenom)}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                {{form_row(form.sexe)}}
+                            </div>
+                            <div class="col-md-6">
+                                {{form_row(form.numeroSs)}}
+                            </div>
+                            <div class="col-md-3">
+                                {{form_row(form.cle)}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-5">
+                                {{form_label(form.adresse)}}
+                                {{form_widget(form.adresse)}}
+                                {{form_help(form.adresse)}}
+                                <ul id="adresse-select-list" class="list-group"></ul>
+                            </div>
+                            <div class="col-md-5">
+                                {{form_row(form.complementAdresse)}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-5">
+                                {{form_row(form.codePostal)}}
+                            </div>
+                            <div class="col-md-5">
+                                {{form_row(form.ville)}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 col-md-3">
+                                {{form_label(form.dateDeNaissance)}}
+                                {{form_widget(form.dateDeNaissance)}}
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                {{form_label(form.villeNaissance)}}
+                                {{form_widget(form.villeNaissance)}}
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                {{form_label(form.departementNaissance)}}
+                                {{form_widget(form.departementNaissance)}}
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                {{form_label(form.paysNaissance)}}
+                                {{form_widget(form.paysNaissance)}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 col-md-4">
+                                {{form_row(form.nationnalite)}}
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                {{form_row(form.dateExpirationTs)}}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    {% import _self as formMacros %}
+                    {% macro printCollectionFichiersRow(formElement) %}<div class='col-md-11 element-collection-file'>{{form_label(formElement)}}{{form_widget(formElement)}}<div class='col-md-1 suppression'><button type='button' class='btn btn-xs btn-danger'><i class='bi bi-trash'></i></button></div></div>{% endmacro %}
+
+                    <fieldset class="form-group">
+                        <legend class="mt-4">Documents à fournir</legend>
+                        {% for typeDocument in candidat.typeCandidat.documentsAFournir|filter(typeDocument => typeDocument.multiple == false) %}
+                            <div class="form-group col-md-6">
+                                {{ form_label(form[typeDocument.slug]) }}
+                                {{ form_widget(form[typeDocument.slug]) }}
+                            </div>
+                        {% endfor %}
+
+                        {% for typeDocument in candidat.typeCandidat.documentsAFournir|filter(typeDocument => typeDocument.multiple == true) %}
+                            <div class="form-group col-md-6">
+                                <div>
+                                    {{ form_label(form[typeDocument.slug]) }}
+                                    <button type="button" id="add_{{typeDocument.slug}}" class="btn-xs btn-success ajout {{typeDocument.slug}}"> Ajouter <i class="bi bi-plus-circle"></i> </button>
+                                </div>
+    
+                                {{ form_widget(form[typeDocument.slug], {'attr': {'data-prototype': formMacros.printCollectionFichiersRow(form[typeDocument.slug].vars.prototype)|replace({'"' : "'"}) }}) }}
+                                
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+
+                    <div class="modal-footer">
+                        {{form_row(form.valider, { 'label': '<i class="bi bi-check-square"></i> Valider', 'label_html' : true })}}
+                    </div>
+            
+
+                </fieldset>
+            {{form_end(form)}}

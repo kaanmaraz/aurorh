@@ -3,6 +3,7 @@
     {{ parent() }}
     {{encore_entry_link_tags('modal-box')}}
     {{encore_entry_link_tags('loader')}}
+    {{ encore_entry_link_tags('enregistreFichiers') }}
 {% endblock %}
 {% block page_title %} Paramétrage de l'application {% endblock %}
 {% block page_subtitle %}{% endblock %}
@@ -23,5 +24,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{encore_entry_script_tags('EnregistreImageService')}}
+    {{encore_entry_script_tags('enregistreFichiers')}}
+    {{encore_entry_script_tags('glyphiconAlterne')}}
 {% endblock %}

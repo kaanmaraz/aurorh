@@ -1,15 +1,16 @@
 import * as toastr from 'toastr';
 import 'toastr/build/toastr.css';
+import AbstractEnregistreFichierService from './AbstractEnregistreFichierService';
 const axios = require("axios")
 
-class EnregistreImageService {
-  constructor() {
-    this.formImage = null; 
+class EnregistreImageService extends AbstractEnregistreFichierService {
+  constructor(form , type ) {
+    super(form, type)
   }
 
 
   addShowOnclick() {
-    $(".apercu").each(function () {
+    $(".apercu-"+this.type).each(function () {
       $(this).on("click", function () {
         let imageAMontrerUrl = $(this).attr("id")
         $("#show_image_modal .modal-content .image").html("<img src='"+ imageAMontrerUrl +"'/>")
@@ -28,11 +29,9 @@ class EnregistreImageService {
     })
   }
   
-   
-  
   
   addSupprimeOnclick() {
-    $("#listeUrls .supprime").each(function () {
+    $(".listeUrls-"+this.type+" .supprime-"+ this.type).each(function () {
           let bouton = $(this)
           let urlImage = $(this).attr("id")
           $(this).on("click", function () {
@@ -55,18 +54,16 @@ class EnregistreImageService {
   
   }
   
-  addOnsubmitImage() {
-    var objectEnregistreImageService = this; 
-    this.formImage.addEventListener('submit', function (e) {
+  addOnsubmitFile() {
+    this.form.addEventListener('submit',  (e) =>  {
       e.preventDefault(); 
       $(".loader").show()
-      axios.post(this.action, new FormData(e.target))
-        .then(function (response) {
-          document.querySelector("#listeUrls").innerHTML += "<li class='list-group-item' ><a href='"+ response.data +"' >"+ response.data +"</a><button id='"+ response.data +"' class='apercu btn btn-xs btn-info' >Aperçu</button><button id='"+ response.data +"' class='supprime btn btn-xs btn-danger'> <i class='fas fa-times'></i> </button></li>"
-          objectEnregistreImageService.addSupprimeOnclick();   
-          objectEnregistreImageService.addCloseOnclick(); 
-          objectEnregistreImageService.addShowOnclick(); 
-  
+      axios.post(this.form.action, new FormData(e.target))
+        .then( (response) => {
+          document.querySelector(".listeUrls-"+this.type).innerHTML += "<li class='list-group-item' ><a href='"+ response.data +"' >"+ response.data +"</a><button id="+response.data+" class='apercu-image btn btn-xs btn-info' >Aperçu</button><button id='"+ response.data +"' class='supprime-"+this.type+" btn btn-xs btn-danger'> <i class='fas fa-times'></i> </button></li>"
+          this.addSupprimeOnclick();   
+          this.addCloseOnclick(); 
+          this.addShowOnclick(); 
       })
         .catch(function (error) {
           toastr.error(error);
@@ -78,17 +75,5 @@ class EnregistreImageService {
     })
   }
 }
-
-
-
-if (document.querySelector("form[name='add_image_mail_template']") != null) {
-  var enregistreImageService = new EnregistreImageService(); 
-  enregistreImageService.formImage = document.querySelector("form[name='add_image_mail_template']");  
-  enregistreImageService.addOnsubmitImage(); 
-  enregistreImageService.addSupprimeOnclick();   
-  enregistreImageService.addCloseOnclick(); 
-  enregistreImageService.addShowOnclick(); 
-}
-
 
 export default EnregistreImageService; 

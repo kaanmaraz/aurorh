@@ -1,0 +1,28 @@
+.listeUrls-image .supprime-image {
+    float: right;
+}
+
+.listeUrls-pj .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.image{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.image img {
+    width: 100%;
+}
+
+.liste-variables{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.panel-title {
+    text-align: center;
+}

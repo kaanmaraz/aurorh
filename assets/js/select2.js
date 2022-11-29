@@ -9,4 +9,7 @@ $(".select2.multiple").select2({
     multiple: true
 })
 
-$("select:not(.multiple)").select2()
+$("select:not(.multiple)").select2({
+    width: "100%",
+    multiple: false
+})

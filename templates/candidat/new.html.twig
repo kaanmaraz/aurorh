@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
 {{ parent() }}
+{{ encore_entry_link_tags('select2') }}
     {{ encore_entry_link_tags('form-buttons-footer') }}
     {{ encore_entry_link_tags('candidatForm') }}
 {% endblock %}
@@ -21,4 +22,5 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('candidatForm') }}
+    {{ encore_entry_script_tags('select2') }}
 {% endblock %}

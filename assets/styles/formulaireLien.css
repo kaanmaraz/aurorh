@@ -1,0 +1,26 @@
+.suppression{
+    margin-top:auto ;
+    margin-bottom: auto;
+}
+#adresse-select-list {
+    z-index: 1000;
+}
+#adresse-select-list li{
+    z-index: 1000;
+}
+#adresse-select-list li {
+    padding: 0;
+}
+#adresse-select-list li button {
+    width: 100%;
+}
+.element-collection-file{
+    display: grid;
+    grid-template-columns: 10fr 1fr;
+}
+.element-collection-file{
+    margin-top: 2%;
+}
+.element-collection-file label{
+    display: none;
+}

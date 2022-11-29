@@ -107,13 +107,8 @@ class Candidat
     #[Groups(["candidat_serialize", "soumis_candidat_serialize"])]
     private ?string $villeNaissance = null;
 
-    #[ORM\Column(length: 2, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["candidat_serialize", "soumis_candidat_serialize"])]
-     #[Assert\Regex(
-       pattern: "~^[0-9]{2}$~",
-        htmlPattern: "[0-9]{2}",
-        message:"Veuillez entrer uniquement le numéro de département exemple: 38"
-     )]
     private ?string $departementNaissance = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -122,15 +117,12 @@ class Candidat
 
     #[ORM\Column(length: 15, nullable: true)]
     #[Groups(["candidat_serialize", "soumis_candidat_serialize"])]
+    #[Assert\Length(min:13,max: 13)]
     private ?string $numeroSs = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["candidat_serialize", "soumis_candidat_serialize"])]
     private ?string $nomUsage = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["candidat_serialize", "soumis_candidat_serialize"])]
-    private ?string $completementAdresse = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateExpirationTs = null;
@@ -262,6 +254,7 @@ class Candidat
     private ?string $numeroAgentManager = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Assert\Length(min: 2,max: 2)]
     private ?string $cle = null;
 
     #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: Document::class, orphanRemoval: true)]
@@ -284,9 +277,17 @@ class Candidat
     #[ORM\Column(type: Types::JSON)]
     private array $statut = [];
 
+    #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: MailEnvoye::class, orphanRemoval: true)]
+    private Collection $mailEnvoyes;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["candidat_serialize", "soumis_candidat_serialize"])]
+    private ?string $complementAdresse = null;
+
     public function __construct()
     {
         $this->documents = new ArrayCollection();
+        $this->mailEnvoyes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -426,18 +427,6 @@ class Candidat
         return $this;
     }
 
-    public function getCompletementAdresse(): ?string
-    {
-        return $this->completementAdresse;
-    }
-
-    public function setCompletementAdresse(?string $completementAdresse): self
-    {
-        $this->completementAdresse = $completementAdresse;
-
-        return $this;
-    }
-
     public function getDateExpirationTs(): ?\DateTimeInterface
     {
         return $this->dateExpirationTs;
@@ -525,6 +514,26 @@ class Candidat
     public function getMdp(): ?string
     {
         return $this->mdp;
+    }
+    
+    public function getMdpGenere(): ?string
+    {
+        //////Création d'un mot de passe généré avec des caractères aléatoires//////
+        // Liste des caractères possibles
+        $cars = 'azertyiopqsdfghjklmwxcvbn0123456789';
+        //la chaine de caractère qui sera remplie
+        $mdp = '';
+        $long = strlen($cars);
+
+        srand((float) microtime() * 1000000);
+        //Initialise le générateur de nombres aléatoires
+        //Créer la chaine de caractère avec 12 caractères
+        for ($i = 0; $i < Candidat::NB_CHAR_MDP; ++$i) {
+            $mdp = $mdp.substr($cars, rand(0, $long - 1), 1);
+        }
+        $this->mdp = $mdp;
+        //Assigne le mot de passe
+        return $mdp;
     }
 
     public function setMdp(?string $mdp): self
@@ -853,6 +862,48 @@ class Candidat
     public function setStatut(array $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MailEnvoye>
+     */
+    public function getMailEnvoyes(): Collection
+    {
+        return $this->mailEnvoyes;
+    }
+
+    public function addMailEnvoye(MailEnvoye $mailEnvoye): self
+    {
+        if (!$this->mailEnvoyes->contains($mailEnvoye)) {
+            $this->mailEnvoyes->add($mailEnvoye);
+            $mailEnvoye->setCandidat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailEnvoye(MailEnvoye $mailEnvoye): self
+    {
+        if ($this->mailEnvoyes->removeElement($mailEnvoye)) {
+            // set the owning side to null (unless already changed)
+            if ($mailEnvoye->getCandidat() === $this) {
+                $mailEnvoye->setCandidat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getComplementAdresse(): ?string
+    {
+        return $this->complementAdresse;
+    }
+
+    public function setComplementAdresse(?string $complementAdresse): self
+    {
+        $this->complementAdresse = $complementAdresse;
 
         return $this;
     }

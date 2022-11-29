@@ -1,4 +1,5 @@
 import EnregistreImageService from './EnregistreImageService.js'
+import EnregistrePJService from './EnregistrePJService.js'
 import * as toastr from 'toastr';
 import 'toastr/build/toastr.css';
 const axios = require("axios")
@@ -21,15 +22,16 @@ class MailFormModalService{
   }
 
   listenFormMail() {
-    document.querySelector("form[name='mail_template']").addEventListener('submit', function (e) {
+    document.querySelector("form[name='mail_template']").addEventListener('submit',  (e) => {
       e.preventDefault(); 
       $(".modal-loader").show()
-      axios.post(this.action, new FormData(e.target))
+      axios.post('/candidat/mail_template/'+ this.candidatChoisi, new FormData(e.target))
       .then(function (response) {
-        toastr.success("Template de mail enregistré avec succes")
+        $("#action_modal_mail").hide()
+        toastr.success(response.data)
       })
       .catch(function (error) {
-        toastr.error(error.response.data);
+        toastr.error( "Erreur dans l'envoi du mail" + error.response.data);
       })
       .then(function () {
         $(".modal-loader").hide()
@@ -39,19 +41,19 @@ class MailFormModalService{
   }
 
   addShowModalEvent(){
-    var objectMailFormModalService = this;
-    $(".action_button").each(function () {
-      $(this).on("click", function () {
+
+    $(".action_button").each( (index, element) => {
+      $(element).on("click", (event) =>  {
         $(".loader").show()
-        this.candidatChoisi = $(this).attr("id").replace('envoi_mail_bouton_', ''); 
-        axios.post('/candidat/get_mail_template/' + this.candidatChoisi)
-        .then(function (response) {
-          
+        this.candidatChoisi = $(event.currentTarget).attr("id").replace('envoi_mail_bouton_', ''); 
+        axios.post('/candidat/mail_template/' + this.candidatChoisi)
+        .then( (response) => {
           $("#action_modal_mail").show()
-          $("#action_modal_mail .modal-content").append(response.data)
-          objectMailFormModalService.listenFormMail(); 
-          objectMailFormModalService.addClickCloseSpan(); 
-          objectMailFormModalService.initEnregistreImageService(); 
+          $("#action_modal_mail .modal-content").html("<span id='action_closespan_mail' class='close-mail-modal'>&times;</span>" + "<span class='modal-loader'></span>" + response.data)
+            this.listenFormMail(); 
+            this.addClickCloseSpan(); 
+            this.initEnregistreImageService(); 
+            this.initEnregistrePJService(); 
         })
         .catch(function (error) {
           console.log(error);
@@ -64,22 +66,23 @@ class MailFormModalService{
     })
   }
 
-
-
   initEnregistreImageService(){
-    this.enregistreImageService = new EnregistreImageService(); 
-    this.enregistreImageService.formImage = document.querySelector("form[name='add_image_mail_template']");  
-    this.enregistreImageService.addOnsubmitImage(); 
+    this.enregistreImageService = new EnregistreImageService(document.querySelector("form[name='add_image_mail_template']"), 'image'); 
+    this.enregistreImageService.addOnsubmitFile(); 
     this.enregistreImageService.addSupprimeOnclick();   
     this.enregistreImageService.addCloseOnclick(); 
     this.enregistreImageService.addShowOnclick(); 
   }
+
+  initEnregistrePJService(){
+    this.enregistrePJService = new EnregistrePJService(document.querySelector("form[name='add_pj_mail_template']"),'pj' );  
+    this.enregistrePJService.addOnsubmitFile(); 
+    this.enregistrePJService.addSupprimeOnclick();  
+    this.enregistrePJService.updateInclure();  
+  }
 }
 
-var mailFormModalService = new MailFormModalService(); 
-mailFormModalService.addShowModalEvent(); 
-
-
+export default MailFormModalService
 
 
 

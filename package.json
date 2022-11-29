@@ -22,7 +22,9 @@
         "@editorjs/editorjs": "^2.25.0",
         "admin-lte": "^3.2.0",
         "axios": "^0.27.2",
+        "boostrap": "^2.0.0",
         "bootstrap": "^3.4.1",
+        "bootstrap-icons": "^1.9.1",
         "jszip": "^3.10.1",
         "select2": "^4.1.0-rc.0",
         "toastr": "^2.1.4"

@@ -1,0 +1,24 @@
+// assets/styles/global.scss
+
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/dist/css/bootstrap-theme.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import './pulse.css'; 
+h2{
+    color: white;
+    padding: 1%;
+    text-align: center;
+}
+
+.container{
+    background: var(--bs-gray-100) ;
+    padding: 1%; 
+}
+
+footer{
+
+    background-color: var(--bs-primary);
+}
